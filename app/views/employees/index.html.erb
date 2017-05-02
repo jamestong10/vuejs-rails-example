@@ -1,2 +1,29 @@
-<h1>Employees#index</h1>
-<p>Find me in app/views/employees/index.html.erb</p>
+<h1>Emplyee</h1>
+
+<div id="employees">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Manager</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr
+        is="employee-row"
+        v-for="employee in employees"
+        :employee="employee">
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script type="text/x-template" id="employee-row">
+  <tr>
+    <td>{{ employee.name }}</td>
+    <td>{{ employee.email }}</td>
+    <td>{{ employee.manager }}</td>
+  </tr>
+</script>
