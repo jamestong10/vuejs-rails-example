@@ -20,6 +20,19 @@ class EmployeesController < ApplicationController
     end
   end
 
+  def update
+    @employee = Employee.find(params[:id])
+    respond_to do |format|
+      format.json do
+        if @employee.update(employee_params)
+          render json: @employee
+        else
+          render json: { errors: @employee.errors.message }, status: :unprocessable_entity
+        end
+      end
+    end
+  end
+
   private
   def employee_params
     params.require(:employee).permit(:name, :email, :manager)

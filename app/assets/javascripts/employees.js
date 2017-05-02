@@ -2,6 +2,36 @@ Vue.component('employee-row', {
   template: '#employee-row',
   props: {
     employee: Object
+  },
+  data: function() {
+    return {
+      editMode: false,
+      errors: {}
+    }
+  },
+  methods: {
+    toggleManagerStatus: function() {
+      this.employee.manager = !this.employee.manager;
+      this.updateEmployee();
+    },
+    updateEmployee: function() {
+      var that = this;
+      $.ajax({
+        method: 'PUT',
+        data: {
+          employee: that.employee
+        },
+        url: '/employees/'+that.employee.id+'.json',
+        success: function(resp) {
+          that.errors = {}
+          that.employee = resp
+          that.editMode = false
+        },
+        errors: function(resp) {
+          that.errors = resp.responseJSON.errors
+        }
+      });
+    }
   }
 })
 
