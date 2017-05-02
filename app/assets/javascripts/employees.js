@@ -23,12 +23,22 @@ Vue.component('employee-row', {
         },
         url: '/employees/'+that.employee.id+'.json',
         success: function(resp) {
-          that.errors = {}
-          that.employee = resp
-          that.editMode = false
+          that.errors = {};
+          that.employee = resp;
+          that.editMode = false;
         },
         errors: function(resp) {
-          that.errors = resp.responseJSON.errors
+          that.errors = resp.responseJSON.errors;
+        }
+      });
+    },
+    fireEmployee: function() {
+      var that = this;
+      $.ajax({
+        method: 'DELETE',
+        url: '/employees/'+that.employee.id+'.json',
+        success: function(resp) {
+          that.$remove();
         }
       });
     }
@@ -70,7 +80,7 @@ var employees = new Vue({
           that.employees.push(resp);
         },
         error: function(resp) {
-          that.errors = resp.responseJSON.errors
+          that.errors = resp.responseJSON.errors;
         }
       });
     }
