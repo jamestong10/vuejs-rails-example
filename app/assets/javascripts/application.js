@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require vue
+//= require vue-resource
 //= require jquery
 //= require jquery_ujs
 //= require_tree .

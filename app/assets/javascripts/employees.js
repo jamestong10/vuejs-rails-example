@@ -1,3 +1,13 @@
+Vue.http.interceptors.push({
+  request: function (request) {
+    Vue.http.headers.common['X-CSRF-Token'] = $('[name="csrf-token"]').attr('content');
+    return request;
+  },
+  response: function (response) {
+    return response;
+  }
+});
+
 Vue.component('employee-row', {
   template: '#employee-row',
   props: {
@@ -16,31 +26,26 @@ Vue.component('employee-row', {
     },
     updateEmployee: function() {
       var that = this;
-      $.ajax({
-        method: 'PUT',
-        data: {
-          employee: that.employee
-        },
-        url: '/employees/'+that.employee.id+'.json',
-        success: function(resp) {
+      let update_url = '/employees/'+this.employee.id+'.json'
+      this.$http.put(update_url, { employee: this.employee }).then(
+        (resp) => {
           that.errors = {};
-          that.employee = resp;
+          that.employee = resp.data;
           that.editMode = false;
         },
-        errors: function(resp) {
-          that.errors = resp.responseJSON.errors;
+        (resp) => {
+          that.errors = resp.data.errors;
         }
-      });
+      );
     },
     fireEmployee: function() {
       var that = this;
-      $.ajax({
-        method: 'DELETE',
-        url: '/employees/'+that.employee.id+'.json',
-        success: function(resp) {
+      let delete_url = '/employees/'+this.employee.id+'.json';
+      this.$http.delete(delete_url).then(
+        (resp) => {
           that.$remove();
         }
-      });
+      );
     }
   }
 })
@@ -59,30 +64,25 @@ var employees = new Vue({
   ready: function() {
     var that;
     that = this;
-    $.ajax({
-      url: '/employees.json',
-      success: function(resp) {
-        that.employees = resp;
+    this.$http.get('/employees.json').then(
+      (resp) => {
+        that.employees = resp.data;
       }
-    });
+    );
   },
   methods: {
     hireEmployee: function() {
       var that = this;
-      $.ajax({
-        method: 'POST',
-        data: {
-          employee: that.employee
+      this.$http.post('/employees.json', { employee: this.employee }).then(
+        (resp) => {
+          that.errors = {},
+          that.employee = {},
+          that.employees.push(resp.data);
         },
-        url: '/employees.json',
-        success: function(resp) {
-          that.errors = {};
-          that.employees.push(resp);
-        },
-        error: function(resp) {
-          that.errors = resp.responseJSON.errors;
+        (resp) => {
+          that.errors = resp.data.errors;
         }
-      });
+      );
     }
   }
 });
