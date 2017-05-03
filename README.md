@@ -1,24 +1,11 @@
-# README
+# Vue.js and Rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+使用 Vue.js 結合 Rails
 
-Things you may want to cover:
+步驟：
+* 套用 [vuejs-rails](https://github.com/pagekit/vue-resource) gem
+* 建立 employee model
+* 建立 employees controller / employees.js / index.html.erb
+* 導入 Vue.js 
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+參考 [vuejs and rails](https://rlafranchi.github.io/2016/03/09/vuejs-and-rails/)
