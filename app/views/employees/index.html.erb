@@ -56,11 +56,10 @@
   <tr v-if="!editMode">
     <td>{{ employee.name }}</td>
     <td>{{ employee.email }}</td>
-    <td>{{ employee.manager }}</td>
+    <td><input type="checkbox" v-model="employee.manager" disabled=true></td>
     <td>
       <button @click="editMode = true">Edit Employee</button>
-      <button @click="toggleManagerStatus"> {{ employee.manager ? 'demote' : 'promote' }}</button>
-
+      <button @click="toggleManagerStatus">{{ employee.manager ? 'demote' : 'promote'}}</button>
       <button @click="fireEmployee">Fire!</button>
     </td>
   </tr>
